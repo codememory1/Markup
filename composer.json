@@ -16,5 +16,8 @@
         "psr-4": {
             "Codememory\\Components\\Markup\\": ""
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
     }
 }

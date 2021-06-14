@@ -2,16 +2,14 @@
 
 namespace Codememory\Components\Markup\Types;
 
-use Symfony\Component\Yaml\Yaml;
-
 /**
- * Class YamlType
+ * Class JsonType
  *
  * @package Codememory\Components\Markup\Types
  *
  * @author  Codememory
  */
-final class YamlType extends AbstractMarkupType
+final class JsonType extends AbstractMarkupType
 {
 
     /**
@@ -20,7 +18,7 @@ final class YamlType extends AbstractMarkupType
     public function get(): array
     {
 
-        return Yaml::parse($this->getDataByOpenDescriptor()) ?: [];
+        return json_decode($this->getDataByOpenDescriptor(), flags: $this->flags) ?: [];
 
     }
 
@@ -32,9 +30,7 @@ final class YamlType extends AbstractMarkupType
 
         $descriptor = $this->getDescriptor('w+');
 
-        $dataInString = Yaml::dump($data, 3, 2, $this->flags);
-
-        return (bool) fwrite($descriptor, $dataInString);
+        return (bool) fwrite($descriptor, json_encode($data, $this->flags));
 
     }
 

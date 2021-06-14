@@ -4,47 +4,57 @@ namespace Codememory\Components\Markup;
 
 use Codememory\Components\Markup\Interfaces\MarkupInterface;
 use Codememory\Components\Markup\Interfaces\MarkupTypeInterface;
+use Codememory\FileSystem\File;
+use Codememory\FileSystem\Interfaces\FileInterface;
 
 /**
  * Class Markup
- * @package Codememory\Components\src\Markup\src
+ *
+ * @package Codememory\Components\Markup
  *
  * @author  Codememory
  */
 class Markup implements MarkupInterface
 {
 
+    public const CREATE_NON_EXIST = 1;
+
     /**
      * @var MarkupTypeInterface
      */
-    private MarkupTypeInterface $type;
+    private MarkupTypeInterface $markupType;
 
     /**
-     * @var string|null
+     * @var FileInterface
      */
-    private ?string $openFile = null;
+    private FileInterface $filesystem;
 
     /**
-     * @var int
+     * @var string|int
      */
-    private int $flags = 0;
+    private string|int $flags = 0;
+
+    /**
+     * @var Descriptor
+     */
+    private Descriptor $descriptor;
 
     /**
      * Markup constructor.
-     *
-     * @param MarkupTypeInterface $type
      */
-    public function __construct(MarkupTypeInterface $type)
+    public function __construct(MarkupTypeInterface $markupType)
     {
 
-        $this->type = $type;
+        $this->markupType = $markupType;
+        $this->filesystem = new File();
+        $this->descriptor = new Descriptor($this->markupType, $this->filesystem);
 
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function setFlags(int $flags): MarkupInterface
+    public function setFlags(string|int $flags): MarkupInterface
     {
 
         $this->flags = $flags;
@@ -54,41 +64,30 @@ class Markup implements MarkupInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function open(string $filename): TypeAbstract|MarkupInterface
+    public function open(string $path): MarkupTypeInterface
     {
 
-        $this->openFile = $filename;
+        if (!$this->filesystem->exist($path) && $this->flags & self::CREATE_NON_EXIST) {
+            file_put_contents($this->filesystem->getRealPath($path), null);
 
-        $this->type
-            ->setFilename($this->openFile)
-            ->setFlags($this->flags);
+            $this->filesystem->setPermission($path);
+        }
 
-        return $this;
+        $this->markupType->open($this->descriptor, $this->filesystem, $path);
+
+        return $this->markupType;
 
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function get(): array
+    public function close(): void
     {
 
-        return $this->type->open();
-
-    }
-
-    /**
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return mixed
-     */
-    public function __call(string $method, array $arguments): mixed
-    {
-
-        return call_user_func_array([$this->type, $method], $arguments);
+        $this->markupType->closeOpenedDescriptor();
 
     }
 

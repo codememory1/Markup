@@ -2,10 +2,9 @@
 
 namespace Codememory\Components\Markup\Interfaces;
 
-use Codememory\Components\Markup\TypeAbstract;
-
 /**
  * Interface MarkupInterface
+ *
  * @package Codememory\Components\src\Markup\src\Interfaces
  *
  * @author  Codememory
@@ -14,9 +13,9 @@ interface MarkupInterface
 {
 
     /**
-     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
-     * Set any flags before opening the file
-     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Add flags when using markup
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
      * @param int $flags
      *
@@ -25,25 +24,21 @@ interface MarkupInterface
     public function setFlags(int $flags): MarkupInterface;
 
     /**
-     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
-     * Open a file in which you want to write or change
-     * information or read, the path must be without the
-     * file extension
-     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Open a file with a specific markup type and use its methods
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
-     * @param string $filename
-     *
-     * @return MarkupInterface|TypeAbstract
+     * @return mixed
      */
-    public function open(string $filename): MarkupInterface|TypeAbstract;
+    public function open(string $path): MarkupTypeInterface;
 
     /**
-     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
-     * Get an array of all information from a file
-     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     * =>=>=>=>=>=>=>=>=>=>
+     * Close open file
+     * <=<=<=<=<=<=<=<=<=<=
      *
-     * @return array
+     * @return void
      */
-    public function get(): array;
+    public function close(): void;
 
 }
