@@ -69,6 +69,8 @@ class Markup implements MarkupInterface
     public function open(string $path): MarkupTypeInterface
     {
 
+        $path = $path.$this->markupType->getExtension();
+
         if (!$this->filesystem->exist($path) && $this->flags & self::CREATE_NON_EXIST) {
             file_put_contents($this->filesystem->getRealPath($path), null);
 

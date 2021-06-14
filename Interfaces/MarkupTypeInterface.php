@@ -71,4 +71,13 @@ interface MarkupTypeInterface
      */
     public function change(callable $handler): bool;
 
+    /**
+     * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
+     * Returns the extension for files of a specific markup type
+     * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
+     *
+     * @return string
+     */
+    public function getExtension(): string;
+
 }

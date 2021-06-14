@@ -84,6 +84,16 @@ abstract class AbstractMarkupType implements MarkupTypeInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getExtension(): string
+    {
+
+        return static::EXTENSION;
+
+    }
+
+    /**
      * =>=>=>=>=>=>=>=>=>=>=>=>=>=>=>=>
      * Close open handle / file
      * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=

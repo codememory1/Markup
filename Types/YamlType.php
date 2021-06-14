@@ -14,6 +14,8 @@ use Symfony\Component\Yaml\Yaml;
 final class YamlType extends AbstractMarkupType
 {
 
+    protected const EXTENSION = '.yaml';
+
     /**
      * @inheritDoc
      */

@@ -16,6 +16,8 @@ use JetBrains\PhpStorm\Pure;
 class IniType extends AbstractMarkupType
 {
 
+    protected const EXTENSION = '.ini';
+
     /**
      * @var ConvertType
      */

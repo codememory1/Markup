@@ -12,6 +12,8 @@ namespace Codememory\Components\Markup\Types;
 final class JsonType extends AbstractMarkupType
 {
 
+    protected const EXTENSION = '.json';
+
     /**
      * @inheritDoc
      */
