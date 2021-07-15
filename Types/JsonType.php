@@ -20,7 +20,7 @@ final class JsonType extends AbstractMarkupType
     public function get(): array
     {
 
-        return json_decode($this->getDataByOpenDescriptor(), flags: $this->flags) ?: [];
+        return json_decode($this->getDataByOpenDescriptor(), associative: true, flags: $this->flags) ?: [];
 
     }
 
